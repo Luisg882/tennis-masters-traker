@@ -12,6 +12,13 @@ SCOPE_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPE_CREDS)
 SHEET = GSPREAD_CLIENT.open('tennis-masters')
 
-players = SHEET.worksheet('players-scores')
-data = players.get_all_values()
-print(data)
+def score_results():
+    """
+    Get the results of the matches of the day
+    """
+    results = input("Enter the matches results (-1 for the losser and 3 for the winner):\n")
+
+    results_data = results.split(",")
+
+
+
