@@ -20,5 +20,25 @@ def score_results():
 
     results_data = results.split(",")
 
+    if validete_results()
 
 
+def validete_results(values):
+    """
+    Check if the values inserted in the results function are valid
+    """
+    try:
+        int_results = []
+        for value in values:
+            int_results.append(int(value))
+        if len(int_results) != 10:
+            raise ValueError(
+                f"Exactly 10 values required, you provide {len(values)}"
+            )
+        for result in int_results:
+            if result != -1 or result != 3:
+                raise ValueError(
+                    f"The result can only have a value of -1 or 3, you provide {result}"
+                )
+    except ValueError as e:
+        print(f"Invalid data: {e}, please try again.\n")
