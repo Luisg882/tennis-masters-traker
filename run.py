@@ -16,29 +16,58 @@ def score_results():
     """
     Get the results of the matches of the day
     """
-    results = input("Enter the matches results (-1 for the losser and 3 for the winner):\n")
+    while True:
+        results = input("Enter the matches results (-1 for the loser and 3 for the winner):\n")
 
-    results_data = results.split(",")
+        results_data = results.split(",")
 
-    if validete_results()
+        if validate_results(results_data):
+            print("Correct data!")
+            print(results_data)
+            break
 
 
-def validete_results(values):
+def validate_results(values):
     """
     Check if the values inserted in the results function are valid
     """
     try:
+        
         int_results = []
+        #for loop that adds the values of the results as integers on the int_results list
         for value in values:
             int_results.append(int(value))
+        #Checks that the lenght of the result added are a total of 10
         if len(int_results) != 10:
             raise ValueError(
-                f"Exactly 10 values required, you provide {len(values)}"
+                f"Exactly 10 values required, you provided {len(values)}"
             )
+        
+        #Checks that the values in the results are only -1 and 3
         for result in int_results:
-            if result != -1 or result != 3:
+            if result not in [-1, 3]:  
                 raise ValueError(
-                    f"The result can only have a value of -1 or 3, you provide {result}"
+                    f"The result can only have a value of -1 or 3, you provided {result}"
                 )
+        
+        """
+        Checks that there is exactly 5 winners and 5 lossers by 
+        taking the sum of the int-Results and see if its a total of 10 
+        (5 winers mean 3 times 5 meaning 15, 5 
+        lossers mean -5. 15 winners - 5 lossers = 10)
+        """
+        if sum(int_results) != 10:
+            raise ValueError(
+                f"There can only be 5 lossers and 5 winners"
+            )
+
     except ValueError as e:
         print(f"Invalid data: {e}, please try again.\n")
+        return False
+    
+    return True
+
+def main():
+    score_results()
+
+main()
