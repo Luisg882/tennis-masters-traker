@@ -38,7 +38,7 @@ def validate_results(values):
         for value in values:
             int_results.append(int(value))
         #Checks that the lenght of the result added are a total of 10
-        if len(int_results) != 4:
+        if len(int_results) != 10:
             raise ValueError(
                 f"Exactly 10 values required, you provided {len(values)}"
             )
@@ -56,7 +56,7 @@ def validate_results(values):
         (5 winers mean 3 times 5 meaning 15, 5 
         lossers mean -5. 15 winners - 5 lossers = 10)
         """
-        if sum(int_results) != 4:
+        if sum(int_results) != 10:
             raise ValueError(
                 f"There can only be 5 lossers and 5 winners"
             )
@@ -82,22 +82,39 @@ def update_scoreboard(score):
     """
     Sum the results to the current scoreboard
     """
-    scoreboard = SHEET.worksheet('total-socore')
+    scoreboard = SHEET.worksheet('total-score')
 
     #Get all the values
     all_rows = scoreboard.get_all_values()
     #Get the last row
     last_row = all_rows[-1]
     #Transform them in integers
-    int_last_row = [int(num) for num in last_row]
+    int_last_row = [int(num) if num else 0 for num in last_row]
     #Sum the results lis with the last row
     result = [x + y for x, y in zip(score, int_last_row)]
-    print(result)
+    return result
     
 
+def position():
+    """
+    Identify and organize the players by their current score
+    """
+    scoreboard = SHEET.worksheet('total-score')
 
+    # Same technique used in update_scoreboard to get the last row
+    all_rows = scoreboard.get_all_values()
+    last_row = all_rows[-1]
+    # Sort the scores and keep track of player names
+    scores = [int(score) if score else 0 for score in last_row]  
+    player_names = all_rows[0] 
+    # Combine player names and scores
+    player_scores = list(zip(player_names, scores))
+    # Sort the player_scores based on scores
+    sorted_players = sorted(player_scores, key=lambda x: x[1], reverse=True)
+    # Create a list of strings representing player positions and scores
+    for index, player in enumerate(sorted_players):
+        print(f"{index + 1} position {player[0]} with {player[1]} score")
     
-
 
 
 def main():
@@ -108,7 +125,12 @@ def main():
     results_data = [int(num) for num in results]
     print(results_data)
     update_worksheet(results_data, "players-scores")
+    scoreboard = update_scoreboard(results_data)
+    update_worksheet(scoreboard, "total-score")
+    print(scoreboard)
+    print("Leader board\n")
+    position()
+    
 
 
-#main()
-update_scoreboard([-1,3,-1,3,-1,3,-1,3,-1,3])
+main()
