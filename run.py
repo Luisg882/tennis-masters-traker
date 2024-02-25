@@ -80,7 +80,7 @@ def update_worksheet(data, worksheet):
 
 def update_scoreboard(score):
     """
-    Sum the results to the current score 
+    Sum the results to the current scoreboard
     """
     scoreboard = SHEET.worksheet('total-socore')
 
