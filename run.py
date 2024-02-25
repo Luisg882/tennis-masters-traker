@@ -23,8 +23,8 @@ def score_results():
 
         if validate_results(results_data):
             print("Correct data!")
-            print(results_data)
             break
+    return results_data
 
 
 def validate_results(values):
@@ -38,7 +38,7 @@ def validate_results(values):
         for value in values:
             int_results.append(int(value))
         #Checks that the lenght of the result added are a total of 10
-        if len(int_results) != 10:
+        if len(int_results) != 4:
             raise ValueError(
                 f"Exactly 10 values required, you provided {len(values)}"
             )
@@ -56,7 +56,7 @@ def validate_results(values):
         (5 winers mean 3 times 5 meaning 15, 5 
         lossers mean -5. 15 winners - 5 lossers = 10)
         """
-        if sum(int_results) != 10:
+        if sum(int_results) != 4:
             raise ValueError(
                 f"There can only be 5 lossers and 5 winners"
             )
@@ -67,7 +67,48 @@ def validate_results(values):
     
     return True
 
-def main():
-    score_results()
 
-main()
+def update_worksheet(data, worksheet):
+    """
+    Update the worksheet with the new data inserted
+    """
+    print(f"Update the {worksheet} worksheet\n")
+    update_worksheet = SHEET.worksheet(worksheet)
+    update_worksheet.append_row(data)
+    print(f"{worksheet} updated successfully")
+
+
+def update_scoreboard(score):
+    """
+    Sum the results to the current score 
+    """
+    scoreboard = SHEET.worksheet('total-socore')
+
+    #Get all the values
+    all_rows = scoreboard.get_all_values()
+    #Get the last row
+    last_row = all_rows[-1]
+    #Transform them in integers
+    int_last_row = [int(num) for num in last_row]
+    #Sum the results lis with the last row
+    result = [x + y for x, y in zip(score, int_last_row)]
+    print(result)
+    
+
+
+    
+
+
+
+def main():
+    """
+    Run the program
+    """
+    results = score_results()
+    results_data = [int(num) for num in results]
+    print(results_data)
+    update_worksheet(results_data, "players-scores")
+
+
+#main()
+update_scoreboard([-1,3,-1,3,-1,3,-1,3,-1,3])
