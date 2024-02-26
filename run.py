@@ -162,7 +162,22 @@ def main():
         position()
         print('\n')
         delete_matches()
-        upcoming_matches()
+        
+        # Check for upcoming matches
+        upcoming = upcoming_matches()
+        if not upcoming:
+            print("There are no upcoming matches.")
+            break
+        else:
+            print("Next upcoming matches:")
+            for match in upcoming:
+                print(match)
+        
+        # Ask user if they want to enter new results
+        choice = input("Do you want to enter new results? (yes/no): ").lower()
+        if choice != 'yes':
+            print("Thank you for using the program. Exiting...")
+            break
         
     
 main()
