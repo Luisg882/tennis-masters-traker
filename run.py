@@ -21,7 +21,7 @@ def score_results():
     """
     while True:
         results = input("Enter the results, each result separeted by a coma, for example -1,3,-1... (-1 for the loser and 3 for the winner):\n")
-
+        
         results_data = results.split(",")
 
         if validate_results(results_data):
