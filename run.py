@@ -138,12 +138,14 @@ def upcoming_matches():
     matches = SHEET.worksheet('upcoming-matches')
 
     all_values = matches.get_all_values()
+    upcoming = []
 
-    print("Next upcoming matches \n")
-    #loop trough the list of list and prints each of the values individualy
+    # Loop through the list of lists and add non-empty values to the upcoming list
     for date in all_values:
         for data in date:
-            print(data)
+            if data:
+                upcoming.append(data)
+    return upcoming
     
 
 def main():
@@ -166,18 +168,25 @@ def main():
         # Check for upcoming matches
         upcoming = upcoming_matches()
         if not upcoming:
-            print("There are no upcoming matches.")
+            print("There are no upcoming matches. Exiting...")
             break
         else:
             print("Next upcoming matches:")
             for match in upcoming:
                 print(match)
         
-        # Ask user if they want to enter new results
-        choice = input("Do you want to enter new results? (yes/no): ").lower()
+        # Ask user if they want to enter new results (with validation)
+        while True:
+            try:
+                choice = input("Do you want to enter new results? (yes/no): ").lower()
+                if choice not in ['yes', 'no']:
+                    raise ValueError("Invalid input. Please enter 'yes' or 'no'.")
+                break  # Break the loop if input is valid
+            except ValueError as e:
+                print(f"Error: {e}")
+        
         if choice != 'yes':
             print("Thank you for using the program. Exiting...")
             break
-        
     
 main()
