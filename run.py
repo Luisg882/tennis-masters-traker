@@ -12,12 +12,15 @@ SCOPE_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPE_CREDS)
 SHEET = GSPREAD_CLIENT.open('tennis-masters')
 
+print("Welcom to Tennis Masters. In this program you can update the results of every day match\n")
+print("Wen you add the results they will be assigned in the following order:\nJhon Mcenroe	-- Rafael Nadal -- Roger Federer -- Novak Djokovic -- Andre Agassi -- Pete Sampras -- Rod Laver -- Bjorn Borg -- Jimmi Connors -- Ivan Lendl")
+
 def score_results():
     """
     Get the results of the matches of the day
     """
     while True:
-        results = input("Enter the matches results (-1 for the loser and 3 for the winner):\n")
+        results = input("Enter the results, each result separeted by a coma, for example -1,3,-1... (-1 for the loser and 3 for the winner):\n")
 
         results_data = results.split(",")
 
@@ -38,7 +41,7 @@ def validate_results(values):
         for value in values:
             int_results.append(int(value))
         #Checks that the lenght of the result added are a total of 10
-        if len(int_results) != 2:
+        if len(int_results) != 10:
             raise ValueError(
                 f"Exactly 10 values required, you provided {len(values)}"
             )
@@ -56,7 +59,7 @@ def validate_results(values):
         (5 winers mean 3 times 5 meaning 15, 5 
         lossers mean -5. 15 winners - 5 lossers = 10)
         """
-        if sum(int_results) != 2:
+        if sum(int_results) != 10:
             raise ValueError(
                 f"There can only be 5 lossers and 5 winners"
             )
@@ -72,10 +75,10 @@ def update_worksheet(data, worksheet):
     """
     Update the worksheet with the new data inserted
     """
-    print(f"Update the {worksheet} worksheet\n")
+    print(f"Update the {worksheet} worksheet")
     update_worksheet = SHEET.worksheet(worksheet)
     update_worksheet.append_row(data)
-    print(f"{worksheet} updated successfully")
+    print(f"{worksheet} updated successfully\n")
 
 
 def update_scoreboard(score):
@@ -159,10 +162,9 @@ def main():
         update_worksheet(results_data, "players-scores")
         scoreboard = update_scoreboard(results_data)
         update_worksheet(scoreboard, "total-score")
-        print(scoreboard)
+        print(f"{scoreboard}\n")
         print("Leader board\n")
         position()
-        print('\n')
         delete_matches()
         
         # Check for upcoming matches
