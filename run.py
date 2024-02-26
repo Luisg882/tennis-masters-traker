@@ -38,7 +38,7 @@ def validate_results(values):
         for value in values:
             int_results.append(int(value))
         #Checks that the lenght of the result added are a total of 10
-        if len(int_results) != 10:
+        if len(int_results) != 2:
             raise ValueError(
                 f"Exactly 10 values required, you provided {len(values)}"
             )
@@ -56,7 +56,7 @@ def validate_results(values):
         (5 winers mean 3 times 5 meaning 15, 5 
         lossers mean -5. 15 winners - 5 lossers = 10)
         """
-        if sum(int_results) != 10:
+        if sum(int_results) != 2:
             raise ValueError(
                 f"There can only be 5 lossers and 5 winners"
             )
@@ -104,33 +104,65 @@ def position():
     # Same technique used in update_scoreboard to get the last row
     all_rows = scoreboard.get_all_values()
     last_row = all_rows[-1]
+
     # Sort the scores and keep track of player names
     scores = [int(score) if score else 0 for score in last_row]  
     player_names = all_rows[0] 
+
     # Combine player names and scores
     player_scores = list(zip(player_names, scores))
+
     # Sort the player_scores based on scores
     sorted_players = sorted(player_scores, key=lambda x: x[1], reverse=True)
+
     # Create a list of strings representing player positions and scores
     for index, player in enumerate(sorted_players):
         print(f"{index + 1} position {player[0]} with {player[1]} score")
     
 
+def delete_matches():
+    """
+    Will delete the last row of the upcoming matches after updating the 
+    scores of the day
+    """
+    dates = SHEET.worksheet('upcoming-matches')
+    print("Update upcoming matches\n")
+    #Use delete_row() method to delete the first row and push up the other dates
+    dates.delete_rows(1)
+    
+
+def upcoming_matches():
+    """
+    Prints the upcoming matches
+    """
+    matches = SHEET.worksheet('upcoming-matches')
+
+    all_values = matches.get_all_values()
+
+    print("Next upcoming matches \n")
+    #loop trough the list of list and prints each of the values individualy
+    for date in all_values:
+        for data in date:
+            print(data)
+    
 
 def main():
     """
     Run the program
     """
-    results = score_results()
-    results_data = [int(num) for num in results]
-    print(results_data)
-    update_worksheet(results_data, "players-scores")
-    scoreboard = update_scoreboard(results_data)
-    update_worksheet(scoreboard, "total-score")
-    print(scoreboard)
-    print("Leader board\n")
-    position()
+    while True:
+        results = score_results()
+        results_data = [int(num) for num in results]
+        print(results_data)
+        update_worksheet(results_data, "players-scores")
+        scoreboard = update_scoreboard(results_data)
+        update_worksheet(scoreboard, "total-score")
+        print(scoreboard)
+        print("Leader board\n")
+        position()
+        print('\n')
+        delete_matches()
+        upcoming_matches()
+        
     
-
-
 main()
