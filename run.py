@@ -21,6 +21,7 @@ def score_results():
     """
     Get the results of the matches of the day
     """
+    print("Update today's results")
     while True:
         data = SHEET.worksheet('players-scores')
         # Get values of the player-scores worksheet
@@ -134,6 +135,21 @@ def delete_matches():
     dates.delete_rows(1)
     
 
+def today_match():
+    """
+    Prints today match
+    """
+    print("Today's matches:\n")
+    match = SHEET.worksheet('upcoming-matches')
+
+    #Get the values from the first row of the upcoming matches
+    all_values = match.get_all_values()
+    mach_of_the_day = all_values[0]
+    #loops in the list to print the matches of today
+    for game in mach_of_the_day:
+        print(game)
+
+
 def upcoming_matches():
     """
     Prints the upcoming matches
@@ -156,6 +172,7 @@ def main():
     Run the program
     """
     while True:
+        today_match()
         results = score_results()
         validated_results = validate_results(results)
         if validated_results is not None:
