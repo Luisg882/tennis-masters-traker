@@ -12,63 +12,60 @@ SCOPE_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPE_CREDS)
 SHEET = GSPREAD_CLIENT.open('tennis-masters')
 
-print("Welcom to Tennis Masters. In this program you can update the results of every day match\n")
-print("Wen you add the results they will be assigned in the following order:\nJhon Mcenroe	-- Rafael Nadal -- Roger Federer -- Novak Djokovic -- Andre Agassi -- Pete Sampras -- Rod Laver -- Bjorn Borg -- Jimmi Connors -- Ivan Lendl")
+print("Welcome to Tennis Masters. In this program you can update the results of every day match\n")
 
 def score_results():
     """
     Get the results of the matches of the day
     """
     while True:
-        results = input("Enter the results, each result separeted by a coma, for example -1,3,-1... (-1 for the loser and 3 for the winner):\n")
-        
-        results_data = results.split(",")
+        data = SHEET.worksheet('players-scores')
+        # Get values of the player-scores worksheet
+        get_all_rows = data.get_all_values()
+        # Get the names of the players
+        players = get_all_rows[0]
+        # List of the scores
+        scores = []
 
-        if validate_results(results_data):
-            print("Correct data!")
-            break
-    return results_data
+        """
+        Loop through the players list and ask for the score for each player
+        if they win the score 3 point, if they loss they score -1
+        """
+        for player in players:
+            result = input(f"Insert the score of {player} (win/loss):").lower().strip()
+            scores.append(result)
 
+        if validate_results(scores):
+            return scores  # Return the scores if validation succeeds
+        else:
+            print("Please try again.\n")
 
+    
 def validate_results(values):
     """
     Check if the values inserted in the results function are valid
     """
     try:
-        
         int_results = []
-        #for loop that adds the values of the results as integers on the int_results list
+        # for loop that converts "win" or "loss" to 3 or -1 respectively
         for value in values:
-            int_results.append(int(value))
-        #Checks that the lenght of the result added are a total of 10
-        if len(int_results) != 10:
-            raise ValueError(
-                f"Exactly 10 values required, you provided {len(values)}"
-            )
-        
-        #Checks that the values in the results are only -1 and 3
-        for result in int_results:
-            if result not in [-1, 3]:  
-                raise ValueError(
-                    f"The result can only have a value of -1 or 3, you provided {result}"
-                )
-        
-        """
-        Checks that there is exactly 5 winners and 5 lossers by 
-        taking the sum of the int-Results and see if its a total of 10 
-        (5 winers mean 3 times 5 meaning 15, 5 
-        lossers mean -5. 15 winners - 5 lossers = 10)
-        """
+            if value == "win":
+                int_results.append(3)
+            elif value == "loss":
+                int_results.append(-1)
+            else:
+                raise ValueError("Invalid input. Please enter 'win' or 'loss'.")
+
+        # Check the number of values after all inputs are collected
+
         if sum(int_results) != 10:
-            raise ValueError(
-                f"There can only be 5 lossers and 5 winners"
-            )
+            raise ValueError("There can only be 5 losers and 5 winners")
+        
+        return int_results
 
     except ValueError as e:
-        print(f"Invalid data: {e}, please try again.\n")
-        return False
-    
-    return True
+        print(f"Invalid data: {e}")
+        
 
 
 def update_worksheet(data, worksheet):
@@ -157,38 +154,42 @@ def main():
     """
     while True:
         results = score_results()
-        results_data = [int(num) for num in results]
-        print(results_data)
-        update_worksheet(results_data, "players-scores")
-        scoreboard = update_scoreboard(results_data)
-        update_worksheet(scoreboard, "total-score")
-        print(f"{scoreboard}\n")
-        print("Leader board\n")
-        position()
-        delete_matches()
-        
-        # Check for upcoming matches
-        upcoming = upcoming_matches()
-        if not upcoming:
-            print("There are no upcoming matches. Exiting...")
-            break
-        else:
-            print("Next upcoming matches:")
-            for match in upcoming:
-                print(match)
-        
-        # Ask user if they want to enter new results (with validation)
-        while True:
-            try:
-                choice = input("Do you want to enter new results? (yes/no): ").lower()
-                if choice not in ['yes', 'no']:
-                    raise ValueError("Invalid input. Please enter 'yes' or 'no'.")
-                break  # Break the loop if input is valid
-            except ValueError as e:
-                print(f"Error: {e}")
-        
-        if choice != 'yes':
-            print("Thank you for using the program. Exiting...")
-            break
+        validated_results = validate_results(results)
+        if validated_results is not None:
+            print(validated_results)
+            update_worksheet(validated_results, "players-scores")
+            scoreboard = update_scoreboard(validated_results)
+            update_worksheet(scoreboard, "total-score")
+            print(f"{scoreboard}\n")
+            print("Leader board\n")
+            position()
+            delete_matches()
+            
+            # Check for upcoming matches
+            upcoming = upcoming_matches()
+            if not upcoming:
+                print("There are no upcoming matches. Exiting...")
+                break
+            else:
+                print("Next upcoming matches:")
+                for match in upcoming:
+                    print(match)
+            
+            # Ask user if they want to enter new results (with validation)
+            while True:
+                try:
+                    choice = input("Do you want to enter new results? (yes/no): ").lower()
+                    if choice not in ['yes', 'no']:
+                        raise ValueError("Invalid input. Please enter 'yes' or 'no'.")
+                    break  # Break the loop if input is valid
+                except ValueError as e:
+                    print(f"Error: {e}")
+            
+            if choice != 'yes':
+                print("Thank you for using the program. Exiting...")
+                break
     
 main()
+
+
+
