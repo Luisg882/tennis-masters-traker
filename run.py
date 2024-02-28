@@ -1,4 +1,5 @@
 import gspread
+from art import text2art
 from google.oauth2.service_account import Credentials
 
 SCOPE = [
@@ -12,6 +13,8 @@ SCOPE_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPE_CREDS)
 SHEET = GSPREAD_CLIENT.open('tennis-masters')
 
+art = text2art("Tennis Masters")
+print(art)
 print("Welcome to Tennis Masters. In this program you can update the results of every day match\n")
 
 def score_results():
@@ -189,7 +192,5 @@ def main():
                 print("Thank you for using the program. Exiting...")
                 break
     
-main()
-
-
-
+if __name__ == "__main__":
+    main()
