@@ -176,7 +176,6 @@ def main():
         results = score_results()
         validated_results = validate_results(results)
         if validated_results is not None:
-            print(validated_results)
             update_worksheet(validated_results, "players-scores")
             scoreboard = update_scoreboard(validated_results)
             update_worksheet(scoreboard, "total-score")
