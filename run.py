@@ -1,3 +1,7 @@
+"""
+This is Tennis masters python program file were the 
+user is going to update the results of every day matches
+"""
 import gspread
 from art import text2art
 from google.oauth2.service_account import Credentials
@@ -33,11 +37,6 @@ def score_results():
         players = get_all_rows[0]
         # List of the scores
         scores = []
-
-        """
-        Loop through the players list and ask for the score for each player
-        if they win the score 3 point, if they loss they score -1
-        """
         for player in players:
             result = input(f"Insert the score of {player} (win/loss):").lower().strip()
             scores.append(result)
@@ -72,15 +71,15 @@ def validate_results(values):
 
     except ValueError as e:
         print(f"Invalid data: {e}")
-
+        return None
 
 def update_worksheet(data, worksheet):
     """
     Update the worksheet with the new data inserted
     """
     print(f"Update the {worksheet} worksheet")
-    update_worksheet = SHEET.worksheet(worksheet)
-    update_worksheet.append_row(data)
+    updated_worksheet = SHEET.worksheet(worksheet)
+    updated_worksheet.append_row(data)
     print(f"{worksheet} updated successfully\n")
 
 
