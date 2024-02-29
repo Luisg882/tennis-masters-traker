@@ -73,6 +73,44 @@ The functions were design extracting the worksheet information like the last row
 
 ## Testing
 
+This project was manually tested as follow:
+
+  - Program was written and tested using Pylint and no errors were found
+  - Tried to insert wrong values in the insert score question and the error is detected
+  - Tried to not insert any value and the error message was trow
+  - Tried to add 7 winners and 3 lossers, the error message was trow
+  - Tested in Visuial Studio Code and Heroku terminal.
+
+  ![picture of the attempt to submit a empty answer](/assets/images/empty-answer-attempt.jpg)
+
+  ![picture of the attempt to submit a different answer than yes or no](/assets/images/different-answer-attempt.jpg)
+
+  ![picture of the attempt to submit more winners than losers](/assets/images/more-winners-than-lossers.jpg)
+
+
+## Bugs
+  **Solved Bugs**
+    - After changing the score_results() to ask the result of each player individualy, the score, win or loss, was translated in 3 and -1 respectively. This make it imposible to validate if the user inser other value different than win or loss in the validate_results, because the returned value from score_results() were a list of numbers not strings. To fix it I make the resturning value of score_results() a list of the answers as strings, then I create a empty list named int_results in the validate_results function and loop the return value of score_results(). In that way I can check in the validate_results if the answer was win or loss, if it was correct I append the result to the list and return the ins_results value.
 
 
 
+  **Remaining Bugs**
+    - No remaining bugs
+
+  **Validator Testing**
+    - Pylint
+      - No error found
+
+## Deployment
+  This project was deployed with Code Institute mock terminal for Heroku
+   - Fork tennis-masters-traker 
+   - Create a new Heroku app
+   - Set the buildpacks to Phyton and NodeJS 
+   - Link the app to the Git Hub repository 
+   - Set the Deployment as automatic
+   - Deploy the program
+
+## Credits
+  - The update_worksheet() function from [Love Sandwiches](https://love-sssandwich-688e34694d3c.herokuapp.com/)
+  - The update_scoreboard was based in the function calculate_stock_data from [Love Sandwiches](https://love-sssandwich-688e34694d3c.herokuapp.com/)
+  - Learn about the enumerate function in [w3schools](https://www.w3schools.com/python/ref_func_enumerate.asp)

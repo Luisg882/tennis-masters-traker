@@ -28,7 +28,7 @@ def score_results():
     """
     Get the results of the matches of the day
     """
-    print("Insert todays results player by player:")
+    print("Insert today's results player by player:")
     while True:
         data = SHEET.worksheet("players-scores")
         # Get values of the player-scores worksheet
@@ -42,9 +42,10 @@ def score_results():
             scores.append(result)
 
         if validate_results(scores):
-            return scores  # Return the scores if validation succeeds
+            return scores  
         else:
             print("Please try again.\n")
+            return None
 
 
 def validate_results(values):
