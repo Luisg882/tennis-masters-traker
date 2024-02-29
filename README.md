@@ -50,6 +50,12 @@ Also the program will calculate the score of each, display the leader board, and
 
   ![picture of the update more results question with a yes answer in the following format: "Do you want to enter new results? (yes/no): yes" tuns the program again](/assets/images/update-more-results-yes.jpg)
 
-  ![picture of the update more results question with a yes answer in the following format: "Do you want to enter new results? (yes/no): no" next line "Thank you for using the program. Exiting...]
+  ![picture of the update more results question with a yes answer in the following format: "Do you want to enter new results? (yes/no): no" next line "Thank you for using Tennis Masters. Exiting...](/assets/images/update-more-results-no.jpg)
+
+- **Exit the program**
+  - Wen there is no more upcoming matches the program is going to Exit automatically giving a exit message first
+
+  ![picture of the Exit program message in the following format: "There are no upcoming matches. Exiting..."](/assets/images/exit.jpg)
+
 
 
