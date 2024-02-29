@@ -41,9 +41,15 @@ Also the program will calculate the score of each, display the leader board, and
 - **Next upcoming matches**
   - It's going to provide the upcoming matches date by date
 
-  ![picture of the next]
+  ![picture of the next upcoming matches in the following format: "Next upcoming matches:  player1 vs player2, player3 vs player4...](/assets/images/next-upcoming-matches.jpg)
 
 - **Update more results**
-  - Will ask if the user want to insert more results
-  - If yes the program will run again giving the following date
+  - Will ask if the user want's to insert more results
+  - If yes the program will run again giving the Todays Matches and restart the hole program
+  - If no the program is going to print a message and exit.
+
+  ![picture of the update more results question with a yes answer in the following format: "Do you want to enter new results? (yes/no): yes" tuns the program again](/assets/images/update-more-results-yes.jpg)
+
+  ![picture of the update more results question with a yes answer in the following format: "Do you want to enter new results? (yes/no): no" next line "Thank you for using the program. Exiting...]
+
 

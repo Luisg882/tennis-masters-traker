@@ -204,7 +204,7 @@ def main():
                     print(f"Error: {e}")
             
             if choice != 'yes':
-                print("Thank you for using the program. Exiting...")
+                print("Thank you for using the Tennis Masters. Exiting...")
                 break
     
 if __name__ == "__main__":
