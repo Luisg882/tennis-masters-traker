@@ -179,6 +179,7 @@ def main():
             update_worksheet(validated_results, "players-scores")
             scoreboard = update_scoreboard(validated_results)
             update_worksheet(scoreboard, "total-score")
+            print("Leader Board:\n")
             position()
             delete_matches()
             
