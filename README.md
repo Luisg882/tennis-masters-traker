@@ -36,5 +36,14 @@ Also the program will calculate the score of each, display the leader board, and
 - **Leader Board**
   - Sorted the players by the higest total score  
 
-  ![picture of the Leader Board in the followed format: "1 position player bane with 20 score"](/assets/images/error-message-more-than-5-win-or-loss.jpg)
+  ![picture of the Leader Board in the followed format: "1 position player bane with 20 score"](/assets/images/leader-board.jpg)
+
+- **Next upcoming matches**
+  - It's going to provide the upcoming matches date by date
+
+  ![picture of the next]
+
+- **Update more results**
+  - Will ask if the user want to insert more results
+  - If yes the program will run again giving the following date
 

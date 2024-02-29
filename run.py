@@ -189,7 +189,7 @@ def main():
                 print("There are no upcoming matches. Exiting...")
                 break
             else:
-                print("Next upcoming matches:")
+                print("Next upcoming matches:\n")
                 for match in upcoming:
                     print(match)
             
