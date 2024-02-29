@@ -1,8 +1,8 @@
 # Tennis Masters
 
-Tennis Masters is a Python terminal program were the user updates the results form the Tennis Masters tournament. This is a fantasy tennis tournament were the greatest tennis players of all time.
+Tennis Masters is a Python terminal program were the user updates the results form the Tennis Masters tournament. This is a fantasy tennis tournament were the greatest tennis players of all time play agains each other in a group stage. 
 
-Also the program will calculate the score of each, display the leader board, and the upcoming matches.
+The program will calculate the score of each, display the leader board, and the upcoming matches. 
 
 [Live version of the program](https://tennis-masters-0a642a2fc445.herokuapp.com/)
 
@@ -56,6 +56,23 @@ Also the program will calculate the score of each, display the leader board, and
   - Wen there is no more upcoming matches the program is going to Exit automatically giving a exit message first
 
   ![picture of the Exit program message in the following format: "There are no upcoming matches. Exiting..."](/assets/images/exit.jpg)
+
+### Future Features
+
+  - Oraganize tides so it will appear in the same position.
+  - Generate a tide break matches.
+  - A function that eliminates the bottom 2 players.
+  - Create a single eliminatory tournament after the group stage.eliminating the bottom 2 players.
+  - Generate a new matches with the dates their are going to play
+
+## Data Model
+
+This project used a series of list to manipulate the worksheets and update the changes.
+
+The functions were design extracting the worksheet information like the last row or specific row to make calculations like score_results() were it adds the results of the matches in the las row of the players-scores worksheet, or the update_scoreboard() function, were it takes the last row of the total-score worksheet and sum the results added in the score_results() function.
+
+## Testing
+
 
 
 

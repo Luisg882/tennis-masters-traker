@@ -5,17 +5,20 @@ from google.oauth2.service_account import Credentials
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
-    "https://www.googleapis.com/auth/drive"
-    ]
+    "https://www.googleapis.com/auth/drive",
+]
 
-CREDS = Credentials.from_service_account_file('creds.json')
+CREDS = Credentials.from_service_account_file("creds.json")
 SCOPE_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPE_CREDS)
-SHEET = GSPREAD_CLIENT.open('tennis-masters')
+SHEET = GSPREAD_CLIENT.open("tennis-masters")
 
 art = text2art("Tennis Masters")
 print(art)
-print("Welcome to Tennis Masters. In this program you can update the results of every day match\n")
+print(
+    "Welcome to Tennis Masters. In this program you can update the results of every day match\n"
+)
+
 
 def score_results():
     """
@@ -23,7 +26,7 @@ def score_results():
     """
     print("Insert todays results player by player:")
     while True:
-        data = SHEET.worksheet('players-scores')
+        data = SHEET.worksheet("players-scores")
         # Get values of the player-scores worksheet
         get_all_rows = data.get_all_values()
         # Get the names of the players
@@ -44,7 +47,7 @@ def score_results():
         else:
             print("Please try again.\n")
 
-    
+
 def validate_results(values):
     """
     Check if the values inserted in the results function are valid
@@ -64,12 +67,11 @@ def validate_results(values):
 
         if sum(int_results) != 10:
             raise ValueError("There can only be 5 losers and 5 winners")
-        
+
         return int_results
 
     except ValueError as e:
         print(f"Invalid data: {e}")
-        
 
 
 def update_worksheet(data, worksheet):
@@ -86,32 +88,32 @@ def update_scoreboard(score):
     """
     Sum the results to the current scoreboard
     """
-    scoreboard = SHEET.worksheet('total-score')
+    scoreboard = SHEET.worksheet("total-score")
 
-    #Get all the values
+    # Get all the values
     all_rows = scoreboard.get_all_values()
-    #Get the last row
+    # Get the last row
     last_row = all_rows[-1]
-    #Transform them in integers
+    # Transform them in integers
     int_last_row = [int(num) if num else 0 for num in last_row]
-    #Sum the results lis with the last row
+    # Sum the results lis with the last row
     result = [x + y for x, y in zip(score, int_last_row)]
     return result
-    
+
 
 def position():
     """
     Identify and organize the players by their current score
     """
-    scoreboard = SHEET.worksheet('total-score')
+    scoreboard = SHEET.worksheet("total-score")
 
     # Same technique used in update_scoreboard to get the last row
     all_rows = scoreboard.get_all_values()
     last_row = all_rows[-1]
 
     # Sort the scores and keep track of player names
-    scores = [int(score) if score else 0 for score in last_row]  
-    player_names = all_rows[0] 
+    scores = [int(score) if score else 0 for score in last_row]
+    player_names = all_rows[0]
 
     # Combine player names and scores
     player_scores = list(zip(player_names, scores))
@@ -121,25 +123,25 @@ def position():
 
     # Create a list of strings representing player positions and scores
     for index, player in enumerate(sorted_players):
-          print(f"{index + 1} position {player[0]} with {player[1]} points")
-    
+        print(f"{index + 1} position {player[0]} with {player[1]} points")
+
 
 def delete_matches():
     """
-    Will delete the last row of the upcoming matches after updating the 
+    Will delete the last row of the upcoming matches after updating the
     scores of the day
     """
-    dates = SHEET.worksheet('upcoming-matches')
-    #Use delete_row() method to delete the first row and push up the other dates
+    dates = SHEET.worksheet("upcoming-matches")
+    # Use delete_row() method to delete the first row and push up the other dates
     dates.delete_rows(1)
-    
+
 
 def today_match():
     """
     Prints today's matches
     """
     print("Today's matches:\n")
-    match_sheet = SHEET.worksheet('upcoming-matches')
+    match_sheet = SHEET.worksheet("upcoming-matches")
 
     # Get the values from the first row of the upcoming matches
     all_values = match_sheet.get_all_values()
@@ -147,14 +149,14 @@ def today_match():
 
     # Print each non-empty match
     for match in matches_of_the_day:
-         print(match)
-   
+        print(match)
+
 
 def upcoming_matches():
     """
     Prints the upcoming matches
     """
-    matches = SHEET.worksheet('upcoming-matches')
+    matches = SHEET.worksheet("upcoming-matches")
 
     all_values = matches.get_all_values()
     upcoming = []
@@ -165,7 +167,7 @@ def upcoming_matches():
             if data:
                 upcoming.append(data)
     return upcoming
-    
+
 
 def main():
     """
@@ -182,7 +184,7 @@ def main():
             print("Leader Board:\n")
             position()
             delete_matches()
-            
+
             # Check for upcoming matches
             upcoming = upcoming_matches()
             if not upcoming:
@@ -192,20 +194,23 @@ def main():
                 print("Next upcoming matches:\n")
                 for match in upcoming:
                     print(match)
-            
+
             # Ask user if they want to enter new results (with validation)
             while True:
                 try:
-                    choice = input("Do you want to enter new results? (yes/no): ").lower()
-                    if choice not in ['yes', 'no']:
+                    choice = input(
+                        "Do you want to enter new results? (yes/no): "
+                    ).lower()
+                    if choice not in ["yes", "no"]:
                         raise ValueError("Invalid input. Please enter 'yes' or 'no'.")
                     break  # Break the loop if input is valid
                 except ValueError as e:
                     print(f"Error: {e}")
-            
-            if choice != 'yes':
+
+            if choice != "yes":
                 print("Thank you for using the Tennis Masters. Exiting...")
                 break
-    
+
+
 if __name__ == "__main__":
     main()
