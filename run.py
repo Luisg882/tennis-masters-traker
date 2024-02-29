@@ -21,7 +21,7 @@ def score_results():
     """
     Get the results of the matches of the day
     """
-    print("Update today's results")
+    print("Insert todays results player by player:")
     while True:
         data = SHEET.worksheet('players-scores')
         # Get values of the player-scores worksheet
@@ -121,7 +121,7 @@ def position():
 
     # Create a list of strings representing player positions and scores
     for index, player in enumerate(sorted_players):
-        print(f"{index + 1} position {player[0]} with {player[1]} score")
+          print(f"{index + 1} position {player[0]} with {player[1]} points")
     
 
 def delete_matches():
@@ -130,25 +130,25 @@ def delete_matches():
     scores of the day
     """
     dates = SHEET.worksheet('upcoming-matches')
-    print("Update upcoming matches\n")
     #Use delete_row() method to delete the first row and push up the other dates
     dates.delete_rows(1)
     
 
 def today_match():
     """
-    Prints today match
+    Prints today's matches
     """
     print("Today's matches:\n")
-    match = SHEET.worksheet('upcoming-matches')
+    match_sheet = SHEET.worksheet('upcoming-matches')
 
-    #Get the values from the first row of the upcoming matches
-    all_values = match.get_all_values()
-    mach_of_the_day = all_values[0]
-    #loops in the list to print the matches of today
-    for game in mach_of_the_day:
-        print(game)
+    # Get the values from the first row of the upcoming matches
+    all_values = match_sheet.get_all_values()
+    matches_of_the_day = all_values[0]
 
+    # Print each non-empty match
+    for match in matches_of_the_day:
+         print(match)
+   
 
 def upcoming_matches():
     """
@@ -179,8 +179,6 @@ def main():
             update_worksheet(validated_results, "players-scores")
             scoreboard = update_scoreboard(validated_results)
             update_worksheet(scoreboard, "total-score")
-            print(f"{scoreboard}\n")
-            print("Leader board\n")
             position()
             delete_matches()
             
