@@ -1,6 +1,6 @@
 """
 This is Tennis masters python program file were the 
-user is going to update the results of every day matches
+user can update the results of every day matches
 """
 import gspread
 from art import text2art
@@ -54,7 +54,7 @@ def validate_results(values):
     """
     try:
         int_results = []
-        # for loop that converts "win" or "loss" to 3 or -1 respectively
+        # Loops turning "win" or "loss" to 3 or -1 respectively
         for value in values:
             if value == "win":
                 int_results.append(3)
@@ -106,8 +106,6 @@ def position():
     Identify and organize the players by their current score
     """
     scoreboard = SHEET.worksheet("total-score")
-
-    # Same technique used in update_scoreboard to get the last row
     all_rows = scoreboard.get_all_values()
     last_row = all_rows[-1]
 
@@ -121,7 +119,7 @@ def position():
     # Sort the player_scores based on scores
     sorted_players = sorted(player_scores, key=lambda x: x[1], reverse=True)
 
-    # Create a list of strings representing player positions and scores
+    # Prints each player position and scores in order 
     for index, player in enumerate(sorted_players):
         print(f"{index + 1} position {player[0]} with {player[1]} points")
 
@@ -132,7 +130,7 @@ def delete_matches():
     scores of the day
     """
     dates = SHEET.worksheet("upcoming-matches")
-    # Use delete_row() method to delete the first row and push up the other dates
+    # Delete the first row and push up the other dates 
     dates.delete_rows(1)
 
 
@@ -171,7 +169,8 @@ def upcoming_matches():
 
 def main():
     """
-    Run the program
+    Run the program functions looping them until the user don't have any results to update
+    or there is no more matches to play 
     """
     while True:
         today_match()
