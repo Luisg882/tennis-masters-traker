@@ -23,7 +23,7 @@ The program will calculate the score of each player, show the leaderboard, and t
   - It will ask to insert the result by player name, asking if they won or lost and update the result in the database.
   - If they win they score 3 points if they lose they score -1.
   - In case the user inserts a value different than win or loss an error message is going to appear and will repeat the Update results.
-  - In case the user adds more winners than losers, and vise-versa, the program will show an error message and repeat the Update results.
+  - In case the user adds more winners than losers, and vice versa, the program will show an error message and repeat the Update results.
 
   ![picture of the updated results, asking for the results in the following format "Insert the score of player name (win/loss): "](/assets/images/update-scores.jpg)
 
