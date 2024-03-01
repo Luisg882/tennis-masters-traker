@@ -59,6 +59,7 @@ The program will calculate the score of each player, show the leaderboard, and t
 
 ### Future Features
 
+  - When the user save the result of a player it will automatically make his opponent get the opposed result and won't ask for that player's result.
   - Identify ties and organize them in the leaderboard so they will appear in the same position.
   - Generate a tide break matches.
   - A function that eliminates the bottom 2 players.
