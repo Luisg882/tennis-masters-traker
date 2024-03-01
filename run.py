@@ -18,6 +18,8 @@ art = text2art("Tennis Masters")
 print(art)
 print("Welcome to Tennis Masters.")
 print("In this program you can update the results of every day match")
+
+
 def score_results():
     """
     Get the results of the matches of the day
@@ -38,6 +40,8 @@ def score_results():
             return scores
         else:
             print("Please try again.\n")
+
+
 def validate_results(values):
     """
     Check if the values inserted in the results function are valid
@@ -58,6 +62,8 @@ def validate_results(values):
         return int_results
     except ValueError as e:
         print(f"Invalid data: {e}")
+
+
 def update_worksheet(data, worksheet):
     """
     Update the worksheet with the new data inserted
@@ -66,6 +72,8 @@ def update_worksheet(data, worksheet):
     updated_worksheet = SHEET.worksheet(worksheet)
     updated_worksheet.append_row(data)
     print(f"{worksheet} updated successfully\n")
+
+
 def update_scoreboard(score):
     """
     Sum the results to the current scoreboard
@@ -80,6 +88,8 @@ def update_scoreboard(score):
     # Sum the results lis with the last row
     result = [x + y for x, y in zip(score, int_last_row)]
     return result
+
+
 def position():
     """
     Identify and organize the players by their current score
@@ -97,6 +107,8 @@ def position():
     # Prints each player position and scores in order
     for index, player in enumerate(sorted_players):
         print(f"{index + 1} position {player[0]} with {player[1]} points")
+
+
 def delete_matches():
     """
     Will delete the last row of the upcoming matches after updating the
@@ -105,6 +117,8 @@ def delete_matches():
     dates = SHEET.worksheet("upcoming-matches")
     # Delete the first row and push up the other dates
     dates.delete_rows(1)
+
+
 def today_match():
     """
     Prints today's matches
@@ -117,6 +131,8 @@ def today_match():
     # Print each non-empty match
     for match in matches_of_the_day:
         print(match)
+
+
 def upcoming_matches():
     """
     Prints the upcoming matches
@@ -130,6 +146,8 @@ def upcoming_matches():
             if data:
                 upcoming.append(data)
     return upcoming
+
+
 def main():
     """
     Run the program functions looping them until the
@@ -170,6 +188,7 @@ def main():
             if choice != "yes":
                 print("Thank you for using the Tennis Masters. Exiting...")
                 break
+
+
 if __name__ == "__main__":
     main()
-
