@@ -59,6 +59,7 @@ The program will calculate the score of each player, show the leaderboard, and t
 
 ### Future Features
 
+  - After you run the program and insert all the results the won't be any upcoming matches to play and the program exits. Create a function that will generate new random matches and reset the tournament. 
   - When the user save the result of a player it will automatically make his opponent get the opposed result and won't ask for that player's result.
   - Identify ties and organize them in the leaderboard so they will appear in the same position.
   - Generate a tide break matches.
@@ -94,20 +95,20 @@ This project was manually tested as follows:
     - After changing the score_results() to ask the result of each player individually the score, win or loss, was translated in 3 and -1 in the same function. This makes it impossible to validate a wrong answer, different than win or loss, in the validate_results() function, because the returned value from score_results() was a list of numbers, not strings. To fix it I make the returning value of score_results() a list of the answers, win or loss, that the user made. Then I create an empty list named int_results in the validate_results function and loop the return value of score_results(). In that way I can check in the validate_results if the answer was a win or loss, from then if it was a win it will append 3 to the ins_result list or -1 in the case of a loss. 
 
   **Remaining Bugs**
-    - No remaining bugs
+    - If you insert all the results it will delete all the upcoming matches. Running the program for a second time will allow you to insert the results, update the score, and return the leaderboard but will exit the program after it because there are no upcoming matches to play.
 
   **Validator Testing**
-    - Pylint
-      - No error found
+    - Pylint.
+      - No error found.
 
 ## Deployment
-  This project was deployed with a Code Institute mock terminal for Heroku
-   - Fork tennis-masters-tracker 
-   - Create a new Heroku app
-   - Set the buildpacks to Phyton and NodeJS 
-   - Link the app to the Git Hub repository 
-   - Set the Deployment as automatic
-   - Deploy the program
+  This project was deployed with a Code Institute mock terminal for Heroku.
+   - Fork tennis-masters-tracker. 
+   - Create a new Heroku app.
+   - Set the buildpacks to Phyton and NodeJS.
+   - Link the app to the Git Hub repository. 
+   - Set the Deployment as automatic.
+   - Deploy the program.
 
 ## Credits
   - The update_worksheet() function from [Love Sandwiches](https://love-sssandwich-688e34694d3c.herokuapp.com/)
